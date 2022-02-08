@@ -1,0 +1,21 @@
+version: "3.1"
+services:
+  db:
+    build:
+      dockerfile: ./postgres.dockerfile
+      context: ./docker
+    image: naturalis-postgres-db
+    container_name: naturalis-db-container
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: naturalis
+    ports:
+      - "5432:5432"
+    networks:
+      - naturalis-network
+
+networks:
+  naturalis-network:
+    driver: bridge
