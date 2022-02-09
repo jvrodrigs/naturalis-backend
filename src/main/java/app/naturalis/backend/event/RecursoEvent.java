@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 public class RecursoEvent extends ApplicationEvent {
 
     private HttpServletResponse response;
-    private Long id;
+    private int id;
 
-    public RecursoEvent(Object source, HttpServletResponse response, Long id) {
+    public RecursoEvent(Object source, HttpServletResponse response, int id) {
         super(source);
         this.response = response;
         this.id = id;
@@ -19,7 +19,7 @@ public class RecursoEvent extends ApplicationEvent {
         return response;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 }

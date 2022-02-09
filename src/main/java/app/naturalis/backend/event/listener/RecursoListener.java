@@ -12,7 +12,7 @@ public class RecursoListener implements ApplicationListener<RecursoEvent> {
     @Override
     public void onApplicationEvent(RecursoEvent event) {
         HttpServletResponse response = event.getResponse();
-        Long id = event.getId();
+        int id = event.getId();
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(id).toUri();

@@ -1,8 +1,9 @@
 package app.naturalis.backend.repository;
 
-import app.naturalis.backend.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import app.naturalis.backend.model.Cliente;
 
-@Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {}
+import java.util.Optional;
+
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+}
