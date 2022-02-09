@@ -1,8 +1,9 @@
 package app.naturalis.backend.model;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "cliente")
@@ -13,7 +14,11 @@ public class Cliente {
     private Long id;
 
     @NotNull
+    @Size(min = 5, max = 20)
     private String nome;
+
+    @NotNull
+    private String telefone;
 
     @Embedded
     private Endereco endereco;
@@ -35,6 +40,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Endereco getEndereco() {

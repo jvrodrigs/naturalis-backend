@@ -1,5 +1,5 @@
 CREATE TABLE cliente (
-    id int8 NOT NULL,
+    id SERIAL  PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     telefone VARCHAR(50) NOT NULL,
     logradouro VARCHAR(30),

@@ -1,5 +1,5 @@
 CREATE TABLE status(
-    id int8 NOT NULL,
+    id SERIAL  PRIMARY KEY,
     nome VARCHAR(50) NOT NULL
 );
 
