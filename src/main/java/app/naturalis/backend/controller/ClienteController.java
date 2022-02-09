@@ -4,7 +4,6 @@ import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.repository.ClienteRepository;
 import app.naturalis.backend.service.ClienteService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -49,11 +48,6 @@ public class ClienteController {
         return cliente.isPresent() ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/del/{id}")
-    public void removeClientById(@PathVariable("id") int id){
-       this.clienteService.removeClintById(id);
-    }
-
     @PutMapping("/edit/{id}")
     public ResponseEntity<Cliente> editById(@PathVariable("id") int id, @Valid @RequestBody Cliente cliente){
         var client = this.clienteService.editById(id, cliente);
@@ -63,5 +57,10 @@ public class ClienteController {
     @PutMapping("/edit/{id}/active")
     public void updateActiveProp(@PathVariable("id") int id, @RequestBody Boolean ativo){
         this.clienteService.updateActive(id, ativo);
+    }
+
+    @DeleteMapping("/del/{id}")
+    public void removeClientById(@PathVariable("id") int id){
+        this.clienteService.removeClintById(id);
     }
 }

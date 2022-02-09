@@ -24,19 +24,19 @@ public class ClienteService {
         return clienteById;
    }
 
-   public void removeClintById(int id){
-        this.clienteRepository.deleteById(id);
-   }
-
-   public Cliente editById(int id, Cliente cliente){
+    public Cliente editById(int id, Cliente cliente){
         Optional<Cliente> saveClient = Optional.ofNullable(this.clienteRepository.findById(id).orElseThrow( () -> new EmptyResultDataAccessException((1))));
         BeanUtils.copyProperties(cliente, saveClient.get(), "id");
         return this.clienteRepository.save(saveClient.get());
-   }
+    }
 
    public void updateActive(int id, Boolean ativo){
         Optional<Cliente> cliente = Optional.ofNullable(this.clienteRepository.findById(id).orElseThrow( () -> new EmptyResultDataAccessException((1))));
         cliente.get().setAtivo(ativo);
         this.clienteRepository.save(cliente.get());
    }
+
+    public void removeClintById(int id){
+        this.clienteRepository.deleteById(id);
+    }
 }

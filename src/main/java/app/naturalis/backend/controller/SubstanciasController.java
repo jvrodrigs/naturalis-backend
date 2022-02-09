@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/substances")
@@ -39,6 +40,13 @@ public class SubstanciasController {
         pubEvent.publishEvent(new RecursoEvent(this, response, subsCreate.getId()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(subsCreate);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") int id){
+        Optional<Substancias> substancias = this.substanciasService.getById(id);
+
+        return substancias.isPresent() ? ResponseEntity.ok(substancias) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/del/{id}")
