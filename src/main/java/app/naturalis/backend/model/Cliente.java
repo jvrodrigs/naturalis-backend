@@ -1,6 +1,8 @@
 package app.naturalis.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -64,5 +66,11 @@ public class Cliente {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @JsonIgnore
+    @Transient
+    public Boolean isInativo(){
+        return !this.ativo;
     }
 }
