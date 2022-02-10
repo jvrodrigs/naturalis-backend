@@ -4,6 +4,7 @@ import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.handler.NaturalisExceptionHandler;
 import app.naturalis.backend.handler.exception.ClienteIsInativoException;
 import app.naturalis.backend.model.OrdemServico;
+import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import app.naturalis.backend.repository.OrdemServicoRepository;
 import app.naturalis.backend.service.OrdemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class OrdemServicoController {
     private MessageSource messageSource;
 
     @GetMapping
-    public List<OrdemServico> getAll(){
-        return this.ordemServicoRepository.findAll();
+    public List<OrdemServico> getAll(OrdemServicoFilter osFilter){
+        return this.ordemServicoRepository.filtrar(osFilter);
     }
 
     @GetMapping("/{id}")
