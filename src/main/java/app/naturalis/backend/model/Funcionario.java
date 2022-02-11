@@ -2,6 +2,8 @@ package app.naturalis.backend.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "funcionario")
@@ -22,6 +24,11 @@ public class Funcionario {
 
     @NotNull
     private String senha;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "funcionario_perm", joinColumns = @JoinColumn(name = "funcionario_id"),
+    inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private List<Permissao> permissaos;
 
 
     public int getId() {
@@ -62,5 +69,26 @@ public class Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Permissao> getPermissaos() {
+        return permissaos;
+    }
+
+    public void setPermissaos(List<Permissao> permissaos) {
+        this.permissaos = permissaos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Funcionario that = (Funcionario) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
