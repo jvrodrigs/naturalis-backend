@@ -17,6 +17,9 @@ public class Funcionario {
     private String nome;
 
     @NotNull
+    private String username;
+
+    @NotNull
     private String cpf;
 
     @NotNull
@@ -77,6 +80,14 @@ public class Funcionario {
 
     public void setPermissaos(List<Permissao> permissaos) {
         this.permissaos = permissaos;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

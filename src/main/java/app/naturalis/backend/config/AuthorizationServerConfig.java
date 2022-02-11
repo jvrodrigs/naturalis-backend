@@ -25,10 +25,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("naturalis")
-                .secret("naturalis123")
+                .secret("$2a$12$wFq3JXZIsjCX1GEtzNL1FuGhGMidJ6L6EOBxuSO2mAM0b4KWdWtmW")
                 .scopes("read", "write")
                 .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(180)
+                .accessTokenValiditySeconds(1800)
                 .refreshTokenValiditySeconds(3600 * 24);
     }
 
