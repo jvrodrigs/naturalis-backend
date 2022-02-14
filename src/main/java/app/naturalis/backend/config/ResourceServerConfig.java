@@ -20,6 +20,8 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/product").permitAll()
+                .antMatchers("/product/create").permitAll()
+                .antMatchers("/product/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

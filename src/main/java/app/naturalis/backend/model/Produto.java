@@ -2,6 +2,7 @@ package app.naturalis.backend.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "produto")
@@ -20,6 +21,12 @@ public class Produto {
 
     @NotNull
     private String fabricante;
+
+    @ManyToMany
+    @JoinTable(name = "substancia_prod",
+                joinColumns = @JoinColumn(name = "produto_id"),
+                inverseJoinColumns = @JoinColumn(name = "substancia_id"))
+    private List<Substancias> substanciasList;
 
     public int getId() {
         return id;
@@ -59,5 +66,13 @@ public class Produto {
 
     public void setFabricante(String fabricante) {
         this.fabricante = fabricante;
+    }
+
+    public List<Substancias> getSubstanciasList() {
+        return substanciasList;
+    }
+
+    public void setSubstanciasList(List<Substancias> substanciasList) {
+        this.substanciasList = substanciasList;
     }
 }
