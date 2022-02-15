@@ -3,6 +3,7 @@ package app.naturalis.backend.controller;
 import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.model.Produto;
 import app.naturalis.backend.repository.ProdutoRepository;
+import app.naturalis.backend.repository.filter.ProdutoFilter;
 import app.naturalis.backend.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,7 +29,9 @@ public class ProdutoController {
     private ApplicationEventPublisher pubEvent;
 
     @GetMapping
-    public List<Produto> getAll(){return this.produtoRepository.findAll();}
+    public List<Produto> getAll(ProdutoFilter produtoFilter){
+        return this.produtoRepository.filtrar(produtoFilter);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Produto> create(@Valid @RequestBody Produto produto, HttpServletResponse response){
