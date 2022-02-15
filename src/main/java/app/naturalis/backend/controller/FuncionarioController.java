@@ -33,4 +33,9 @@ public class FuncionarioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(funcSave);
     }
+
+    @DeleteMapping("/del/{id}")
+    public void removeFuncById(@PathVariable("id") int id){
+        this.funcionarioService.removeFuncById(id);
+    }
 }

@@ -33,6 +33,11 @@ public class Funcionario {
     inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private List<Permissao> permissaos;
 
+    @OneToOne
+    @NotNull
+    @JoinTable(name = "funcionario_cargo", joinColumns = @JoinColumn(name = "funcionario_id"),
+            inverseJoinColumns = @JoinColumn(name = "cargo_id"))
+    private Cargo cargo;
 
     public int getId() {
         return id;
@@ -88,6 +93,14 @@ public class Funcionario {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 
     @Override

@@ -22,4 +22,8 @@ public class FuncionarioService {
         funcionario.setSenha(bcryptPass);
         return this.funcRepo.save(funcionario);
     }
+
+    public void removeFuncById(int id){
+        this.funcRepo.deleteById(id);
+    }
 }

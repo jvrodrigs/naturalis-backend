@@ -22,6 +22,8 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
                 .antMatchers("/product").permitAll()
                 .antMatchers("/product/create").permitAll()
                 .antMatchers("/product/*").permitAll()
+                .antMatchers("/user").permitAll()
+                .antMatchers("/user/create").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
