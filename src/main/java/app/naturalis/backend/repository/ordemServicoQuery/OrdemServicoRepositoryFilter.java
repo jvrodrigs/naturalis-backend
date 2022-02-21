@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface OrdemServicoRepositoryFilter {
 
-    public List<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter);
+    List<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter);
 }

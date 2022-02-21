@@ -1,5 +1,7 @@
 package app.naturalis.backend.handler;
 
+import app.naturalis.backend.handler.exception.ClienteIsInativoException;
+import app.naturalis.backend.handler.exception.NewUserEqualsCpfException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -20,6 +22,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +62,22 @@ public class NaturalisExceptionHandler extends ResponseEntityExceptionHandler {
         String msgDev = ExceptionUtils.getRootCauseMessage(ex);
         List<Erro> erros = Arrays.asList(new Erro(msgUser, msgDev));
         return handleExceptionInternal(ex, erros, new HttpHeaders(),HttpStatus.BAD_REQUEST,request);
+    }
+
+    @ExceptionHandler( {NewUserEqualsCpfException.class} )
+    public ResponseEntity<Object> handleNewUserEqualsCpfException(NewUserEqualsCpfException ex, HttpServletResponse response){
+        String msgUser = messageSource.getMessage("user.cpf-existente", null, LocaleContextHolder.getLocale());
+        String msgDev = ex.toString();
+        List<NaturalisExceptionHandler.Erro> erros = Arrays.asList(new NaturalisExceptionHandler.Erro(msgUser, msgDev));
+        return ResponseEntity.badRequest().body(erros);
+    }
+
+    @ExceptionHandler( {ClienteIsInativoException.class} )
+    public ResponseEntity<Object> handleClienteIsInativoException(ClienteIsInativoException ex, HttpServletResponse response){
+        String msgUser = messageSource.getMessage("cliente.inexistente-ou-inativo", null, LocaleContextHolder.getLocale());
+        String msgDev = ex.toString();
+        List<NaturalisExceptionHandler.Erro> erros = Arrays.asList(new NaturalisExceptionHandler.Erro(msgUser, msgDev));
+        return ResponseEntity.badRequest().body(erros);
     }
 
     private List<Erro> listErrorsHandler(BindingResult bindingResult){

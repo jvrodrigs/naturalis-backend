@@ -1,8 +1,12 @@
 package app.naturalis.backend.service;
 
+import app.naturalis.backend.handler.exception.NewUserEqualsCpfException;
+import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.Funcionario;
+import app.naturalis.backend.projection.FuncionarioSerial;
 import app.naturalis.backend.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FuncionarioService {
@@ -27,6 +32,11 @@ public class FuncionarioService {
 
 
     public Funcionario newFunc(Funcionario funcionario){
+        Optional<Funcionario> funcEqualsCpf = this.funcRepo.findByCpf(funcionario.getCpf());
+        if (!funcEqualsCpf.isEmpty()){
+            throw new NewUserEqualsCpfException();
+        }
+
         String bcryptPass = passwordEncoder .encode(funcionario.getSenha());
         funcionario.setSenha(bcryptPass);
         Funcionario funcionarioSave = this.funcRepo.save(funcionario);
@@ -36,6 +46,11 @@ public class FuncionarioService {
             funcRepo.createRelationPermFunc(funcionarioSave.getId(), i);
         }
         return funcionario;
+    }
+
+    public Optional<Funcionario> funcGetById(int id){
+        Optional<Funcionario> funcById = Optional.ofNullable(this.funcRepo.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1)));
+        return funcById;
     }
 
     public void removeFuncById(int id){

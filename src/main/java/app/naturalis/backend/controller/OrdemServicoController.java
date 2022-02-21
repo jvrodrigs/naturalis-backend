@@ -64,13 +64,4 @@ public class OrdemServicoController {
         return ResponseEntity.ok(os);
     }
 
-    @ExceptionHandler( {ClienteIsInativoException.class} )
-    public ResponseEntity<Object> handleClienteIsInativoException(ClienteIsInativoException ex, HttpServletResponse response){
-        String msgUser = messageSource.getMessage("cliente.inexistente-ou-inativo", null, LocaleContextHolder.getLocale());
-        String msgDev = ex.toString();
-        List<NaturalisExceptionHandler.Erro> erros = Arrays.asList(new NaturalisExceptionHandler.Erro(msgUser, msgDev));
-        return ResponseEntity.badRequest().body(erros);
-    }
-
-
 }
