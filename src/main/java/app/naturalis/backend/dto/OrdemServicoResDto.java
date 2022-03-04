@@ -1,34 +1,23 @@
-package app.naturalis.backend.projection;
+package app.naturalis.backend.dto;
 
 import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.Produto;
 import app.naturalis.backend.model.Status;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class OrdemServicSerial implements Serializable {
+public class OrdemServicoResDto {
     private int id;
     private Cliente cliente;
     private Produto produto;
-    private FuncionarioSerial autor;
+    private String idAutor;
+    private String nomeAutor;
     private Status status;
+    private String idResp;
+    private String nomeResp;
     private String descricao;
     private String valorTotal;
-    private FuncionarioSerial responsavel;
     private Date dataCriado;
-
-    public OrdemServicSerial(int id, Cliente cliente, Produto produto, FuncionarioSerial autor, Status status, String descricao, String valorTotal, FuncionarioSerial responsavel, Date dataCriado) {
-        this.id = id;
-        this.cliente = cliente;
-        this.produto = produto;
-        this.autor = autor;
-        this.status = status;
-        this.descricao = descricao;
-        this.valorTotal = valorTotal;
-        this.responsavel = responsavel;
-        this.dataCriado = dataCriado;
-    }
 
     public int getId() {
         return id;
@@ -54,12 +43,20 @@ public class OrdemServicSerial implements Serializable {
         this.produto = produto;
     }
 
-    public FuncionarioSerial getAutor() {
-        return autor;
+    public String getIdAutor() {
+        return idAutor;
     }
 
-    public void setAutor(FuncionarioSerial autor) {
-        this.autor = autor;
+    public void setIdAutor(String idAutor) {
+        this.idAutor = idAutor;
+    }
+
+    public String getNomeAutor() {
+        return nomeAutor;
+    }
+
+    public void setNomeAutor(String nomeAutor) {
+        this.nomeAutor = nomeAutor;
     }
 
     public Status getStatus() {
@@ -68,6 +65,22 @@ public class OrdemServicSerial implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getIdResp() {
+        return idResp;
+    }
+
+    public void setIdResp(String idResp) {
+        this.idResp = idResp;
+    }
+
+    public String getNomeResp() {
+        return nomeResp;
+    }
+
+    public void setNomeResp(String nomeResp) {
+        this.nomeResp = nomeResp;
     }
 
     public String getDescricao() {
@@ -84,14 +97,6 @@ public class OrdemServicSerial implements Serializable {
 
     public void setValorTotal(String valorTotal) {
         this.valorTotal = valorTotal;
-    }
-
-    public FuncionarioSerial getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(FuncionarioSerial responsavel) {
-        this.responsavel = responsavel;
     }
 
     public Date getDataCriado() {

@@ -1,7 +1,6 @@
 package app.naturalis.backend.repository;
 
 import app.naturalis.backend.model.Funcionario;
-import app.naturalis.backend.projection.FuncionarioSerial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

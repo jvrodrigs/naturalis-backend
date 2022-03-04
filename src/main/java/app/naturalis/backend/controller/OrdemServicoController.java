@@ -1,5 +1,6 @@
 package app.naturalis.backend.controller;
 
+import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.handler.NaturalisExceptionHandler;
 import app.naturalis.backend.handler.exception.ClienteIsInativoException;
@@ -7,6 +8,7 @@ import app.naturalis.backend.model.OrdemServico;
 import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import app.naturalis.backend.repository.OrdemServicoRepository;
 import app.naturalis.backend.service.OrdemService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
@@ -37,9 +40,15 @@ public class OrdemServicoController {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping
-    public List<OrdemServico> getAll(OrdemServicoFilter osFilter){
-        return this.ordemServicoRepository.filtrar(osFilter);
+    public List<OrdemServicoResDto> getAllFilter(OrdemServicoFilter osFilter){
+        return this.ordemServicoRepository.filtrar(osFilter)
+                .stream()
+                .map(this::toOrdemServicoResDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -62,6 +71,10 @@ public class OrdemServicoController {
     public ResponseEntity<OrdemServico> editById(@PathVariable("id") int id, @Valid @RequestBody OrdemServico osRequest){
         var os = this.ordemService.editById(id, osRequest);
         return ResponseEntity.ok(os);
+    }
+
+    private OrdemServicoResDto toOrdemServicoResDto(OrdemServico os){
+        return modelMapper.map(os, OrdemServicoResDto.class);
     }
 
 }

@@ -3,7 +3,6 @@ package app.naturalis.backend.service;
 import app.naturalis.backend.handler.exception.NewUserEqualsCpfException;
 import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.Funcionario;
-import app.naturalis.backend.projection.FuncionarioSerial;
 import app.naturalis.backend.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

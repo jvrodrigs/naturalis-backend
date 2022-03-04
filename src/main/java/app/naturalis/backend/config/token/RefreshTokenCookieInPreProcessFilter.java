@@ -50,12 +50,4 @@ public class RefreshTokenCookieInPreProcessFilter implements Filter {
             return map;
         }
     }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
-    public void destroy() {
-    }
 }

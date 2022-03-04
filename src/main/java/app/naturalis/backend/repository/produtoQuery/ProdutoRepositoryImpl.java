@@ -45,7 +45,7 @@ public class ProdutoRepositoryImpl implements ProdutoRpositoryFilter{
         }
 
         if (!StringUtils.isEmpty(produtoFilter.getCodigoRef())){
-            predicates.add(builder.like(builder.lower(root.get("codref")), "%" + produtoFilter.getCodigoRef().toLowerCase() + "%"));
+            predicates.add(builder.like(builder.lower(root.get("codigoReferencia")), "%" + produtoFilter.getCodigoRef().toLowerCase() + "%"));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);

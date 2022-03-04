@@ -1,5 +1,7 @@
 package app.naturalis.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -38,6 +40,8 @@ public class Funcionario {
     @JoinTable(name = "funcionario_cargo", joinColumns = @JoinColumn(name = "funcionario_id"),
             inverseJoinColumns = @JoinColumn(name = "cargo_id"))
     private Cargo cargo;
+
+    public Funcionario() {}
 
     public int getId() {
         return id;
