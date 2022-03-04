@@ -1,6 +1,7 @@
 package app.naturalis.backend.repository;
 
 import app.naturalis.backend.model.Funcionario;
+import app.naturalis.backend.repository.FuncionarioQuery.FuncionarioRepositoryFilter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer>, FuncionarioRepositoryFilter {
 
     public Optional<Funcionario> findByEmail(String email);
 

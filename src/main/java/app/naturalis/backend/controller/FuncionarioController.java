@@ -3,6 +3,7 @@ package app.naturalis.backend.controller;
 import app.naturalis.backend.dto.FuncionarioResDto;
 import app.naturalis.backend.model.Funcionario;
 import app.naturalis.backend.repository.FuncionarioRepository;
+import app.naturalis.backend.repository.filter.FuncionarioFilter;
 import app.naturalis.backend.service.FuncionarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class FuncionarioController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public List<FuncionarioResDto> getAll(){
-        return this.funcionarioRepository.findAll()
+    public List<FuncionarioResDto> getAll(FuncionarioFilter funcionarioFilter){
+        return this.funcionarioRepository.filtrar(funcionarioFilter)
                 .stream()
                 .map(this::toFuncionarioResDto)
                 .collect(Collectors.toList());
