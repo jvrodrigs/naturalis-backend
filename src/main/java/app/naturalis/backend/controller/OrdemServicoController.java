@@ -1,5 +1,6 @@
 package app.naturalis.backend.controller;
 
+import app.naturalis.backend.dto.OrdemServicoPorDiaDto;
 import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.model.OrdemServico;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +53,18 @@ public class OrdemServicoController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/get-day")
+    public List<OrdemServicoPorDiaDto> getFilterMonth() {
+        OrdemServicoFilter osFilterDate = new OrdemServicoFilter();
+        LocalDate dateInLocal = LocalDate.now();
+        Date dateConverter = Date.from(dateInLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        osFilterDate.setDataCriacaoDe(dateConverter);
+        return this.ordemServicoRepository.filtrarPorDia(osFilterDate)
+                .stream()
+                .map(this::ordemServicoPorMesDto)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> orderGetById(@PathVariable("id") int id){
         Optional<OrdemServico> os = this.ordemService.getById(id);
@@ -71,6 +89,10 @@ public class OrdemServicoController {
 
     private OrdemServicoResDto toOrdemServicoResDto(OrdemServico os){
         return modelMapper.map(os, OrdemServicoResDto.class);
+    }
+
+    private OrdemServicoPorDiaDto ordemServicoPorMesDto(OrdemServico os){
+        return modelMapper.map(os, OrdemServicoPorDiaDto.class);
     }
 
 }

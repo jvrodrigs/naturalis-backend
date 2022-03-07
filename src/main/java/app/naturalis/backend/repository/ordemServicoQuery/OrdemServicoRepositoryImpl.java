@@ -19,6 +19,27 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
     @PersistenceContext
     private EntityManager manager;
 
+
+    @Override
+    public List<OrdemServico> filtrarPorDia(OrdemServicoFilter ordemServicoFilter) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<OrdemServico> criteriaQuery = builder.createQuery(OrdemServico.class);
+        Root<OrdemServico> root = criteriaQuery.from(OrdemServico.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (ordemServicoFilter.getDataCriacaoDe() != null){
+            predicates.add(builder.equal(root.get("dataCriado"), ordemServicoFilter.getDataCriacaoDe()));
+        }
+
+        if (!predicates.isEmpty()){
+            criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
+        }
+
+        TypedQuery<OrdemServico> query = manager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
     @Override
     public List<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();

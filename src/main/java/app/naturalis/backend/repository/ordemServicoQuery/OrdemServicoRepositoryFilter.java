@@ -6,6 +6,6 @@ import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import java.util.List;
 
 public interface OrdemServicoRepositoryFilter {
-
+    List<OrdemServico> filtrarPorDia(OrdemServicoFilter ordemServicoFilter);
     List<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter);
 }

@@ -1,6 +1,7 @@
 package app.naturalis.backend.dto.config;
 
 import app.naturalis.backend.dto.FuncionarioResDto;
+import app.naturalis.backend.dto.OrdemServicoPorDiaDto;
 import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.model.Funcionario;
 import app.naturalis.backend.model.OrdemServico;
@@ -14,6 +15,9 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper(){
         var modelMapper = new ModelMapper();
+        //DTO Ordem de Serviço por Mes
+        modelMapper.createTypeMap(OrdemServico.class, OrdemServicoPorDiaDto.class)
+                .addMapping(OrdemServico::getDataCriado, OrdemServicoPorDiaDto::setDataCompra);
 
         //DTO Funcionário
         modelMapper.createTypeMap(Funcionario.class, FuncionarioResDto.class)
