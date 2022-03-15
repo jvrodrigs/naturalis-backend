@@ -30,7 +30,6 @@ public class ClienteController {
     private ApplicationEventPublisher pubEvent;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE')")
     public List<Cliente> getAll(){
         return this.clienteRepository.findAll();
     }
