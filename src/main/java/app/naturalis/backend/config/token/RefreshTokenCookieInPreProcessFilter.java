@@ -21,7 +21,9 @@ public class RefreshTokenCookieInPreProcessFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
 
-        if ("/oauth/token".equalsIgnoreCase(req.getRequestURI()) && "refresh_token".equals(req.getParameter("grant_type")) && req.getCookies() != null){
+        if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
+                && "refresh_token".equals(req.getParameter("grant_type"))
+                && req.getCookies() != null){
             for (Cookie cookie : req.getCookies()){
                 if (cookie.getName().equals("refresh_token")){
                     String refreshToken = cookie.getValue();
