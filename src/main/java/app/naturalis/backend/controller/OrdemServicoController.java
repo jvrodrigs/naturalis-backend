@@ -1,6 +1,7 @@
 package app.naturalis.backend.controller;
 
 import app.naturalis.backend.dto.OrdemServicoPorDiaDto;
+import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
 import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.event.RecursoEvent;
 import app.naturalis.backend.model.OrdemServico;
@@ -11,7 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +68,19 @@ public class OrdemServicoController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/people/{id}")
+    public ResponseEntity<byte[]> getFilterPeople(@PathVariable("id") int id) throws Exception {
+        var data = this.ordemServicoRepository.porPessoa(id)
+                .stream()
+                .map(this::ordemServicoPorPessoaDto)
+                .collect(Collectors.toList());
+        byte[] rel = ordemService.reportByPeron(id, data);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                .body(rel);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> orderGetById(@PathVariable("id") int id){
         Optional<OrdemServico> os = this.ordemService.getById(id);
@@ -93,6 +109,10 @@ public class OrdemServicoController {
 
     private OrdemServicoPorDiaDto ordemServicoPorMesDto(OrdemServico os){
         return modelMapper.map(os, OrdemServicoPorDiaDto.class);
+    }
+
+    private OrdemServicoPorPessoaDto ordemServicoPorPessoaDto(OrdemServico os){
+        return modelMapper.map(os, OrdemServicoPorPessoaDto.class);
     }
 
 }

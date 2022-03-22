@@ -2,6 +2,7 @@ package app.naturalis.backend.dto.config;
 
 import app.naturalis.backend.dto.FuncionarioResDto;
 import app.naturalis.backend.dto.OrdemServicoPorDiaDto;
+import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
 import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.model.Funcionario;
 import app.naturalis.backend.model.OrdemServico;
@@ -26,6 +27,10 @@ public class ModelMapperConfig {
         modelMapper.createTypeMap(OrdemServico.class, OrdemServicoResDto.class)
                 .addMapping(src -> src.getResponsavel().getNome(), OrdemServicoResDto::setNomeResp)
                 .addMapping(src -> src.getResponsavel().getId(), OrdemServicoResDto::setIdResp);
+
+        modelMapper.createTypeMap(OrdemServico.class, OrdemServicoPorPessoaDto.class)
+                .addMapping(OrdemServico::getId, OrdemServicoPorPessoaDto::setId)
+                .addMapping(dd -> dd.getStatus().getNome(), OrdemServicoPorPessoaDto::setStatus);
 
         return modelMapper;
     }

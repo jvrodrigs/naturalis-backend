@@ -1,16 +1,22 @@
 package app.naturalis.backend.service;
 
+import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
 import app.naturalis.backend.handler.exception.ClienteIsInativoException;
 import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.OrdemServico;
 import app.naturalis.backend.repository.ClienteRepository;
 import app.naturalis.backend.repository.OrdemServicoRepository;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class OrdemService {
@@ -20,6 +26,22 @@ public class OrdemService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    public byte[] reportByPeron(int id, List<OrdemServicoPorPessoaDto> data) throws Exception{
+        var dateParams = new Date();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("DT_INICIO", dateParams);
+        parametros.put("DT_FIM", dateParams);
+        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+
+        InputStream inputStream = this.getClass().getResourceAsStream(
+                "/relatorios/listAllClients.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
+                new JRBeanCollectionDataSource(data));
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
 
     public OrdemServico newOs(OrdemServico ordemServico){
         Optional<Cliente> cliente = this.clienteRepository.findById(ordemServico.getCliente().getId());

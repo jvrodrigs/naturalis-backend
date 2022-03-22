@@ -1,5 +1,6 @@
 package app.naturalis.backend.repository.ordemServicoQuery;
 
+import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
 import app.naturalis.backend.model.OrdemServico;
 import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,29 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
     @PersistenceContext
     private EntityManager manager;
 
+
+    @Override
+    public List<OrdemServico> porPessoa(int id) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<OrdemServico> criteriaQuery = builder.createQuery(OrdemServico.class);
+
+        Root<OrdemServico> root = criteriaQuery.from(OrdemServico.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        Integer idOrder = id;
+
+        if (idOrder != null){
+            predicates.add(builder.equal(root.get("responsavel").get("id"), idOrder));
+        }
+
+        if (!predicates.isEmpty()){
+            criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
+        }
+
+        TypedQuery<OrdemServico> query = manager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
 
     @Override
     public List<OrdemServico> filtrarPorDia(OrdemServicoFilter ordemServicoFilter) {
