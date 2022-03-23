@@ -4,6 +4,7 @@ import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.Produto;
 import app.naturalis.backend.model.Status;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class OrdemServicoResDto {
@@ -16,7 +17,7 @@ public class OrdemServicoResDto {
     private String idResp;
     private String nomeResp;
     private String descricao;
-    private String valorTotal;
+    private BigDecimal total;
     private Date dataCriado;
 
     public int getId() {
@@ -91,12 +92,12 @@ public class OrdemServicoResDto {
         this.descricao = descricao;
     }
 
-    public String getValorTotal() {
-        return valorTotal;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setValorTotal(String valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public Date getDataCriado() {

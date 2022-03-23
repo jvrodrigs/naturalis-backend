@@ -1,6 +1,7 @@
 package app.naturalis.backend.service;
 
 import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
+import app.naturalis.backend.dto.OrdemServicoResDto;
 import app.naturalis.backend.handler.exception.ClienteIsInativoException;
 import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.OrdemServico;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.io.InputStream;
 import java.util.*;
 
@@ -27,6 +29,22 @@ public class OrdemService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    public byte[] reportOrders(List<OrdemServicoResDto> data) throws Exception{
+        var dateParams = new Date();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("DT_INICIO", dateParams);
+        parametros.put("DT_FIM", dateParams);
+        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+
+        InputStream inputStream = this.getClass().getResourceAsStream(
+                "/relatorios/orders-all.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
+                new JRBeanCollectionDataSource(data));
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
     public byte[] reportByPeron(int id, List<OrdemServicoPorPessoaDto> data) throws Exception{
         var dateParams = new Date();
         Map<String, Object> parametros = new HashMap<>();
@@ -35,7 +53,7 @@ public class OrdemService {
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
 
         InputStream inputStream = this.getClass().getResourceAsStream(
-                "/relatorios/listAllClients.jasper");
+                "/relatorios/orders-person.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
                 new JRBeanCollectionDataSource(data));

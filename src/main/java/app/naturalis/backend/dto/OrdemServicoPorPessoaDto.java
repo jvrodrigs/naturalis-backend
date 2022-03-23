@@ -1,6 +1,7 @@
 package app.naturalis.backend.dto;
 
 import app.naturalis.backend.model.Cliente;
+import app.naturalis.backend.model.Funcionario;
 import app.naturalis.backend.model.OrdemServico;
 
 import java.math.BigDecimal;
@@ -13,6 +14,8 @@ public class OrdemServicoPorPessoaDto {
     private String status;
 
     private BigDecimal total;
+
+    private Funcionario responsavel;
 
     public int getId() {
         return id;
@@ -44,5 +47,13 @@ public class OrdemServicoPorPessoaDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Funcionario getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Funcionario responsavel) {
+        this.responsavel = responsavel;
     }
 }
