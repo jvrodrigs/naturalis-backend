@@ -7,6 +7,7 @@ import app.naturalis.backend.model.Cliente;
 import app.naturalis.backend.model.OrdemServico;
 import app.naturalis.backend.repository.ClienteRepository;
 import app.naturalis.backend.repository.OrdemServicoRepository;
+import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -29,31 +30,20 @@ public class OrdemService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public byte[] reportOrders(List<OrdemServicoResDto> data) throws Exception{
-        var dateParams = new Date();
+    public byte[] reportOrders(List<OrdemServicoResDto> data, OrdemServicoFilter filters) throws Exception{
+        if (data.isEmpty()){
+            throw new EmptyResultDataAccessException(1);
+        }
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("DT_INICIO", dateParams);
-        parametros.put("DT_FIM", dateParams);
+        parametros.put("DT_INICIO", filters.getDataCriacaoDe());
+        parametros.put("DT_FIM", filters.getDataCriacaoAte());
+        if (filters.getResp()!= 0){
+            parametros.put("INFO_RESP",data.get(0).getNomeResp());
+        }
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
 
         InputStream inputStream = this.getClass().getResourceAsStream(
                 "/relatorios/orders-all.jasper");
-
-        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
-                new JRBeanCollectionDataSource(data));
-
-        return JasperExportManager.exportReportToPdf(jasperPrint);
-    }
-
-    public byte[] reportByPeron(int id, List<OrdemServicoPorPessoaDto> data) throws Exception{
-        var dateParams = new Date();
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("DT_INICIO", dateParams);
-        parametros.put("DT_FIM", dateParams);
-        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
-
-        InputStream inputStream = this.getClass().getResourceAsStream(
-                "/relatorios/orders-person.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
                 new JRBeanCollectionDataSource(data));

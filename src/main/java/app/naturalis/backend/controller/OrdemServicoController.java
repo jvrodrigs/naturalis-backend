@@ -74,28 +74,11 @@ public class OrdemServicoController {
                 .stream()
                 .map(this::toOrdemServicoResDto)
                 .collect(Collectors.toList());
-        byte[] rel = ordemService.reportOrders(data);
+        byte[] rel = ordemService.reportOrders(data, osFilter);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         String filename = "relatorio-ordens-servico";
-        headers.setContentDispositionFormData(filename, filename);
-//        return new ResponseEntity<>(rel, headers, HttpStatus.OK);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
-                .body(rel);
-    }
-
-    @GetMapping("/report/people/{id}")
-    public ResponseEntity<byte[]> reportGetFilterPeople(@PathVariable("id") int id) throws Exception {
-        var data = this.ordemServicoRepository.porPessoa(id)
-                .stream()
-                .map(this::ordemServicoPorPessoaDto)
-                .collect(Collectors.toList());
-        byte[] rel = ordemService.reportByPeron(id, data);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        String filename = "ordens-responsavel-" + id;
         headers.setContentDispositionFormData(filename, filename);
 //        return new ResponseEntity<>(rel, headers, HttpStatus.OK);
         return ResponseEntity.ok()

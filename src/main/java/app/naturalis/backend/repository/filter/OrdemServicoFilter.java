@@ -17,6 +17,8 @@ public class OrdemServicoFilter {
     private String valorTotalDe;
     private String valorTotalAte;
 
+    private int resp;
+
     public String getDescricao() {
         return descricao;
     }
@@ -55,5 +57,13 @@ public class OrdemServicoFilter {
 
     public void setDataCriacaoAte(Date dataCriacaoAte) {
         this.dataCriacaoAte = dataCriacaoAte;
+    }
+
+    public int getResp() {
+        return resp;
+    }
+
+    public void setResp(int resp) {
+        this.resp = resp;
     }
 }
