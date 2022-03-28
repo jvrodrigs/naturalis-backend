@@ -23,7 +23,7 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
                 .antMatchers("/product/create").permitAll()
                 .antMatchers("/orders/report/people/{id}").permitAll()
                 .antMatchers("/orders/report").permitAll()
-                .antMatchers("/user").permitAll()
+                .antMatchers("/user").  permitAll()
                 .antMatchers("/client").permitAll()
                 .anyRequest().authenticated()
                 .and()

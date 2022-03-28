@@ -89,6 +89,10 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
             predicates.add(builder.equal(root.get("responsavel").get("id"), ordemServicoFilter.getResp()));
         }
 
+        if(ordemServicoFilter.getAutor() != 0){
+            predicates.add(builder.equal(root.get("autor").get("id"), ordemServicoFilter.getAutor()));
+        }
+
         if (ordemServicoFilter.getDataCriacaoDe() != null){
             predicates.add(builder.greaterThanOrEqualTo(root.get("dataCriado"), ordemServicoFilter.getDataCriacaoDe()));
         }

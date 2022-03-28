@@ -18,6 +18,8 @@ public class OrdemServicoFilter {
     private String valorTotalAte;
 
     private int resp;
+    private int autor;
+
 
     public String getDescricao() {
         return descricao;
@@ -65,5 +67,13 @@ public class OrdemServicoFilter {
 
     public void setResp(int resp) {
         this.resp = resp;
+    }
+
+    public int getAutor() {
+        return autor;
+    }
+
+    public void setAutor(int autor) {
+        this.autor = autor;
     }
 }
