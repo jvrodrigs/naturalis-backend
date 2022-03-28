@@ -134,5 +134,5 @@ INSERT INTO funcionario_cargo (funcionario_id, cargo_id) values (3, 4);
 
 
 -- Ordem de Serviço
-INSERT INTO ordem_servico (id, cliente_id, produto_id, autor_id, status_id, descricao, valor_total, responsavel_id, criado_em) values (1, 1, 1, 1, 1, 'descricao 1', '1000', 1, '2022-01-01');
-INSERT INTO ordem_servico (id, cliente_id, produto_id, autor_id, status_id, descricao, valor_total, responsavel_id, criado_em) values (2, 2, 2, 1, 1,'descricao 2', '3000', 1, '2021-01-01');
+INSERT INTO ordem_servico ( cliente_id, produto_id, autor_id, status_id, descricao, valor_total, responsavel_id, criado_em) values (1, 1, 1, 1, 'descricao 1', '1000', 1, '2022-01-01');
+INSERT INTO ordem_servico ( cliente_id, produto_id, autor_id, status_id, descricao, valor_total, responsavel_id, criado_em) values (2, 2, 1, 1,'descricao 2', '3000', 1, '2021-01-01');
