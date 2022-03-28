@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +17,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
     public Optional<Funcionario> findByEmail(String email);
 
     public Optional<Funcionario> findByCpf(String cpf);
+
+    List<Funcionario> findByCargoDescricao(String cargodesc);
 
     @Transactional
     @Modifying
