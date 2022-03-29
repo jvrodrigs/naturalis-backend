@@ -7,13 +7,19 @@ import app.naturalis.backend.repository.filter.ProdutoFilter;
 import app.naturalis.backend.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -29,8 +35,13 @@ public class ProdutoController {
     private ApplicationEventPublisher pubEvent;
 
     @GetMapping
-    public List<Produto> getAll(ProdutoFilter produtoFilter){
-        return this.produtoRepository.filtrar(produtoFilter);
+    public Page<Produto> getAll(
+            ProdutoFilter produtoFilter,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable paging = PageRequest.of(page, size);
+        Page<Produto> pageOrder = this.produtoRepository.filtrarPaging(produtoFilter, paging);
+        return pageOrder;
     }
 
     @PostMapping("/create")

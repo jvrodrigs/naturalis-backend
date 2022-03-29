@@ -3,6 +3,9 @@ package app.naturalis.backend.repository.produtoQuery;
 import app.naturalis.backend.model.Produto;
 import app.naturalis.backend.repository.filter.ProdutoFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,6 +33,24 @@ public class ProdutoRepositoryImpl implements ProdutoRpositoryFilter{
 
         TypedQuery<Produto> query = manager.createQuery(criteriaQuery);
         return query.getResultList();
+    }
+
+    @Override
+    public Page<Produto> filtrarPaging(ProdutoFilter produtoFilter, Pageable pageable) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<Produto> criteriaQuery = builder.createQuery(Produto.class);
+        Root<Produto> root = criteriaQuery.from(Produto.class);
+
+        Predicate[] predicates = criarFiltro(produtoFilter, builder, root);
+        criteriaQuery.where(predicates);
+
+        TypedQuery<Produto> query = manager.createQuery(criteriaQuery);
+        int countRows = query.getResultList().size();
+
+        query.setFirstResult((pageable.getPageNumber() - 1) * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+        Page<Produto> result = new PageImpl<>(query.getResultList(), pageable, countRows);
+        return  result;
     }
 
     private Predicate[] criarFiltro(ProdutoFilter produtoFilter, CriteriaBuilder builder,

@@ -1,7 +1,7 @@
 package app.naturalis.backend.repository;
 
 import app.naturalis.backend.model.Funcionario;
-import app.naturalis.backend.repository.FuncionarioQuery.FuncionarioRepositoryFilter;
+import app.naturalis.backend.repository.funcionarioQuery.FuncionarioRepositoryFilter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

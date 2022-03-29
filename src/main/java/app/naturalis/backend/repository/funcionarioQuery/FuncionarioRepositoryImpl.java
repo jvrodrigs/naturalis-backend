@@ -1,4 +1,4 @@
-package app.naturalis.backend.repository.FuncionarioQuery;
+package app.naturalis.backend.repository.funcionarioQuery;
 
 import app.naturalis.backend.model.Funcionario;
 import app.naturalis.backend.repository.filter.FuncionarioFilter;
