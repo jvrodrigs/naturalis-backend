@@ -68,7 +68,7 @@ public class Mailer {
             mimeHelper.setText(message, true);
 
 
-//            mail.send(mimeMessage);
+            mail.send(mimeMessage);
         } catch (MessagingException e){
             throw new RuntimeException("Problemas com o envio de e-mail", e);
         }
