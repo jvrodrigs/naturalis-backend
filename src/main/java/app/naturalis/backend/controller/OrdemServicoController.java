@@ -12,6 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,9 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -49,11 +50,18 @@ public class OrdemServicoController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public List<OrdemServicoResDto> getAllFilter(OrdemServicoFilter osFilter){
-        return this.ordemServicoRepository.filtrar(osFilter)
-                .stream()
-                .map(this::toOrdemServicoResDto)
-                .collect(Collectors.toList());
+    public ResponseEntity<Map<String, Object>> getAllFilter(
+            OrdemServicoFilter osFilter,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable paging = PageRequest.of(page, size);
+        Page<OrdemServico> pageOrder = this.ordemServicoRepository.filtrar(osFilter, paging);
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", pageOrder.stream().map(this::toOrdemServicoResDto));
+        response.put("currentPage", pageOrder.getNumber());
+        response.put("totalItems", pageOrder.getTotalElements());
+        response.put("totalPages", pageOrder.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/get-day")
@@ -70,7 +78,7 @@ public class OrdemServicoController {
 
     @GetMapping("/report")
     public ResponseEntity<byte[]> reportGetOrders(OrdemServicoFilter osFilter) throws Exception {
-        var data = this.ordemServicoRepository.filtrar(osFilter)
+        var data = this.ordemServicoRepository.filtrarReport(osFilter)
                 .stream()
                 .map(this::toOrdemServicoResDto)
                 .collect(Collectors.toList());

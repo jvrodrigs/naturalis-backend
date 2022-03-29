@@ -50,7 +50,7 @@ CREATE TABLE ordem_servico(
   FOREIGN KEY (responsavel_id) REFERENCES funcionario(id)
 );
 
-INSERT INTO funcionario (id, nome, username, cpf, email, senha) values (1, 'João Vitor', 'jvrodrigs', '07064193330', 'jvrodrigs@algamoney.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
+INSERT INTO funcionario (id, nome, username, cpf, email, senha) values (1, 'João Vitor', 'jvrodrigs', '07064193330', 'jvrodrigs@gmail.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
 INSERT INTO funcionario (id, nome, username, cpf, email, senha) values (2, 'admin', 'admin', '07064193330', 'admin@naturalis.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
 INSERT INTO funcionario (id, nome, username, cpf, email, senha) values (3, 'Goreti Juvenal', 'goretijuvli', '07062193330', 'goretijuv@naturalis.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
 

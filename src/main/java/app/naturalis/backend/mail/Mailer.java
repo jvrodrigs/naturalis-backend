@@ -26,9 +26,6 @@ public class Mailer {
     @Autowired
     private TemplateEngine thymeleaf;
 
-    @Autowired
-    private SubstanciasRepository repository;
-
     public void sendAlertSubstancesExpired(
             List<Substancias> expired, List<Funcionario> responsibleRecipients
     ){
@@ -42,7 +39,7 @@ public class Mailer {
 
         this.sendEmailTemplate("naturalis.empresa@gmail.com",
                 emails,
-                "Substâncias vencidas!",
+                "Relatório de Substâncias do Sistema!",
                 template,
                 variables);
     }
@@ -71,7 +68,7 @@ public class Mailer {
             mimeHelper.setText(message, true);
 
 
-            mail.send(mimeMessage);
+//            mail.send(mimeMessage);
         } catch (MessagingException e){
             throw new RuntimeException("Problemas com o envio de e-mail", e);
         }

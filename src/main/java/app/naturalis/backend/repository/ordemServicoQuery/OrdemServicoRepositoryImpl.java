@@ -1,9 +1,11 @@
 package app.naturalis.backend.repository.ordemServicoQuery;
 
-import app.naturalis.backend.dto.OrdemServicoPorPessoaDto;
 import app.naturalis.backend.model.OrdemServico;
 import app.naturalis.backend.repository.filter.OrdemServicoFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -65,9 +67,30 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
     }
 
     @Override
-    public List<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter) {
+    public Page<OrdemServico> filtrar(OrdemServicoFilter ordemServicoFilter, Pageable paging) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<OrdemServico> criteriaQuery = builder.createQuery(OrdemServico.class);
+        Root<OrdemServico> root = criteriaQuery.from(OrdemServico.class);
+
+        Predicate[] predicates = criarRestricoes(ordemServicoFilter, builder, root);
+        criteriaQuery.where(predicates);
+        TypedQuery<OrdemServico> query = manager.createQuery(criteriaQuery);
+        int countRows = query.getResultList().size();
+        query.setFirstResult((paging.getPageNumber() - 1) * paging.getPageSize());
+        query.setMaxResults(paging.getPageSize());
+        Page<OrdemServico> result = new PageImpl<OrdemServico>(query.getResultList(), paging, countRows);
+        return result;
+    }
+
+    @Override
+    public List<OrdemServico> filtrarReport(OrdemServicoFilter ordemServicoFilter) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<OrdemServico> criteriaQuery = builder.createQuery(OrdemServico.class);
+
+        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        countQuery.select(builder.count(countQuery.from(OrdemServico.class)));
+        Long count = manager.createQuery(countQuery).getSingleResult();
+
         Root<OrdemServico> root = criteriaQuery.from(OrdemServico.class);
 
         Predicate[] predicates = criarRestricoes(ordemServicoFilter, builder, root);
