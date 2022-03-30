@@ -38,9 +38,10 @@ public class ProdutoController {
     public Page<Produto> getAll(
             ProdutoFilter produtoFilter,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "false") boolean sort){
         Pageable paging = PageRequest.of(page, size);
-        Page<Produto> pageOrder = this.produtoRepository.filtrarPaging(produtoFilter, paging);
+        Page<Produto> pageOrder = this.produtoRepository.filtrarPaging(produtoFilter, paging,sort);
         return pageOrder;
     }
 

@@ -74,6 +74,7 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
 
         Predicate[] predicates = criarRestricoes(ordemServicoFilter, builder, root);
         criteriaQuery.where(predicates);
+        criteriaQuery.orderBy(builder.desc(root.get("dataCriado")));
         TypedQuery<OrdemServico> query = manager.createQuery(criteriaQuery);
         int countRows = query.getResultList().size();
         query.setFirstResult((paging.getPageNumber() - 1) * paging.getPageSize());

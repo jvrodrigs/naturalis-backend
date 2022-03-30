@@ -36,14 +36,16 @@ public class ProdutoRepositoryImpl implements ProdutoRpositoryFilter{
     }
 
     @Override
-    public Page<Produto> filtrarPaging(ProdutoFilter produtoFilter, Pageable pageable) {
+    public Page<Produto> filtrarPaging(ProdutoFilter produtoFilter, Pageable pageable, boolean sort) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<Produto> criteriaQuery = builder.createQuery(Produto.class);
         Root<Produto> root = criteriaQuery.from(Produto.class);
 
         Predicate[] predicates = criarFiltro(produtoFilter, builder, root);
         criteriaQuery.where(predicates);
-
+        if (sort){
+            criteriaQuery.orderBy(builder.desc(root.get("id")));
+        }
         TypedQuery<Produto> query = manager.createQuery(criteriaQuery);
         int countRows = query.getResultList().size();
 

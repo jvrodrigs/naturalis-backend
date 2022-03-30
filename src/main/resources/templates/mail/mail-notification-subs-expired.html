@@ -3,41 +3,57 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <body style="font-family: Arial; font-size: 14px;">
+<header style="
+    display: flex;
+    align-items: center;
+    justify-items: baseline;
+">
+    <div class="logo">
+        <img width="220px" src="../../imgs/naturalis-loggo.png" alt="Marca da empresa Naturalis">
+    </div>
+    <div class="info">
+        <h2 margin-left="5em" class="info-span">
+            Relatório de Substâncias da Farmácia Naturalis
+        </h2>
+    </div>
+</header>
+<div class="container">
 
-<p>Olá!</p>
+    <p>Olá!</p>
 
-<p>Segue o relatório de substâncias que estão para vencer. Veja:</p>
+    <p>Segue o relatório de substâncias que estão para vencer. Veja:</p>
 
-<p>
-<table style="width: 100%; border-collapse: collapse;  margin: 20px 0">
-    <thead>
-    <tr>
-        <th>Descrição</th>
-        <th>Potência</th>
-        <th>Laboratório</th>
-        <th>Fabricação</th>
-        <th>Validade</th>
-    </tr>
-    </thead>
+    <p>
+    <table style="width: 100%; border-collapse: collapse;  margin: 20px 0">
+        <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Potência</th>
+            <th>Laboratório</th>
+            <th>Fabricação</th>
+            <th>Validade</th>
+        </tr>
+        </thead>
 
-    <tbody>
-    <tr style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc;"
-        th:each="substance: ${substances}">
-        <!-- Validade sendo depois do dia de hoje, azul. Caso não, vermelho (entende-se que esteja vencido -->
-        <td th:text="${substance.descricao}" style="text-align: center"></td>
-        <td th:text="${substance.potencia}" style="text-align: center"></td>
-        <td th:text="${substance.laboratorio}" style="text-align: center"></td>
-        <td th:text="${#dates.format(substance.dataFabricacao, 'dd/MM/yyyy')}"
-            style="text-align: center"></td>
-        <td th:text="${#dates.format(substance.dataValidade, 'dd/MM/yyyy')}"
-            style="text-align: center; color: red" ></td>
-    </tr>
-    </tbody>
-</table>
-</p>
+        <tbody>
+        <tr style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc;"
+            th:each="substance: ${substances}">
+            <!-- Validade sendo depois do dia de hoje, azul. Caso não, vermelho (entende-se que esteja vencido -->
+            <td th:text="${substance.descricao}" style="text-align: center"></td>
+            <td th:text="${substance.potencia}" style="text-align: center"></td>
+            <td th:text="${substance.laboratorio}" style="text-align: center"></td>
+            <td th:text="${#dates.format(substance.dataFabricacao, 'dd/MM/yyyy')}"
+                style="text-align: center"></td>
+            <td th:text="${#dates.format(substance.dataValidade, 'dd/MM/yyyy')}"
+                style="text-align: center; color: red" ></td>
+        </tr>
+        </tbody>
+    </table>
+    </p>
 
-<p>Obrigado.</p>
-<p>Equipe de Desenvolvimento da Naturalis!</p>
+    <p>Obrigado.</p>
+    <p>Equipe de Desenvolvimento da Naturalis!</p>
 
+</div>
 </body>
 </html>

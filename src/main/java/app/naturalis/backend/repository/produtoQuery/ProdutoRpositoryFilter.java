@@ -11,5 +11,5 @@ public interface ProdutoRpositoryFilter {
 
    List<Produto> filtrar(ProdutoFilter produtoFilter);
 
-   Page<Produto> filtrarPaging(ProdutoFilter produtoFilter, Pageable pageable);
+   Page<Produto> filtrarPaging(ProdutoFilter produtoFilter, Pageable pageable, boolean sort);
 }
