@@ -90,7 +90,6 @@ public class OrdemServicoRepositoryImpl implements OrdemServicoRepositoryFilter{
 
         CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
         countQuery.select(builder.count(countQuery.from(OrdemServico.class)));
-        Long count = manager.createQuery(countQuery).getSingleResult();
 
         Root<OrdemServico> root = criteriaQuery.from(OrdemServico.class);
 

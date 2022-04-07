@@ -51,6 +51,14 @@ public class OrdemServicoController {
     private ModelMapper modelMapper;
 
     @GetMapping
+    public List<OrdemServicoResDto>getAllToDash(OrdemServicoFilter ordemServicoFilter){
+        return this.ordemServicoRepository.filtrarReport(ordemServicoFilter)
+                .stream()
+                .map(this::toOrdemServicoResDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/filter")
     public ResponseEntity<Map<String, Object>> getAllFilter(
             OrdemServicoFilter osFilter,
             @RequestParam(defaultValue = "1") int page,
